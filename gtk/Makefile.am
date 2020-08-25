@@ -71,7 +71,7 @@ endif
 
 if OS_WIN32
 gtk_def = gtk.def
-gtk_win32_symbols = -export-symbols $(srcdir)/gtk.def
+gtk_win32_symbols = -export-symbols gtk.def
 
 gtk_win32_res = gtk-win32-res.o
 gtk_win32_res_ldflag = -Wl,gtk-win32-res.o
@@ -81,7 +81,7 @@ gtk-win32-res.o : gtk-win32.rc
 
 install-def-file: gtk.def
 	$(mkinstalldirs) $(DESTDIR)$(libdir)
-	$(INSTALL) $(srcdir)/gtk.def $(DESTDIR)$(libdir)/gtk-win32-2.0.def
+	$(INSTALL) gtk.def $(DESTDIR)$(libdir)/gtk-win32-2.0.def
 uninstall-def-file:
 	-rm $(DESTDIR)$(libdir)/gtk-win32-2.0.def
 else
@@ -109,7 +109,7 @@ endif
 # This places the generated .def file in srcdir, since it is expected to be there.
 # (The one from a tarball is)
 gtk.def: gtk.symbols
-	(echo -e EXPORTS; $(CPP) -P -DINCLUDE_VARIABLES -DG_OS_WIN32 -DALL_FILES - <$(srcdir)/gtk.symbols | sed -e '/^$$/d' -e 's/^/	/' -e 's/G_GNUC_[^ ]*//g') > $(srcdir)/gtk.def
+	(echo -e EXPORTS; $(CPP) -P -DINCLUDE_VARIABLES -DG_OS_WIN32 -DALL_FILES - <$(srcdir)/gtk.symbols | sed -e '/^$$/d' -e 's/^/	/' -e 's/G_GNUC_[^ ]*//g') > gtk.def
 
 gtkalias.h: gtk.symbols
 	  $(PERL) $(srcdir)/makegtkalias.pl < $(srcdir)/gtk.symbols > gtkalias.h
@@ -1463,7 +1463,6 @@ EXTRA_DIST +=                   \
 	tree_minus.xbm          \
 	tree_minus.xpm		\
 	tree_plus.xpm		\
-	gtk.def			\
 	gtk-builder-convert	\
 	gtk-win32.rc		\
 	gtk-win32.rc.in		\
